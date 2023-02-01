@@ -104,6 +104,9 @@ print("Average: " + str(avg))
 
 ###### Creating and Slicing Array ###### =========================
 
+# Import
+import numpy as np
+
 # Create a np.array
 x = np.array([1, 2, 3])
 x = np.array([1, 2, 3], dtype = np.float32) # you can optionally specify dtype
@@ -232,14 +235,34 @@ upper_case = upper_funct()
 # 
 # =============================================================================
 
+# Import
+import pandas as pd
+
+# Create DataFrame
+my_dict = pd.DataFrame({"key1": value1, "key2":vale2})
+
+# Read CSV data
+df = read_csv("file.csv")
+
 # Write csv. This only works if your writing a pd.DataFrame object!
 df.to_csv("filename.csv")
+
+# Merge method
+ward_census = wards.merge(census, on="id")
 
 # Look at first 5 rows of data
 df.head()
 
 # Look at index (row) names
 df.index
+
+# Change a column in your dataset to be the index
+df1 = df.set_index("name")
+df1 = df.set_index(["first_name", "last_name"])
+
+# Reset the indexes that you created - so they become a column
+df.reset_index()
+df.reset_index(drop=True) # Just to drop the index and not make it a column
 
 # Look at column names
 df.columns
@@ -271,6 +294,9 @@ df.shape
 # Sort data  
 df.sort_values("col_name", ascending = False)
 
+# Sort data by index value
+df.sort_index(level = ["name1", "name2"], ascending=[True, False])
+
 # Sort data by multiple valoues 
 df.sort_values(["col_name", "col_name2"], ascending = [True, False])
 
@@ -279,6 +305,21 @@ df["new_col"] = x * y
 
 # Slice DF based on logical conditions
 df[df["col_name"] > 50]
+
+# Slice DF based on index values (index must be sorted!)
+df.sort_index().loc[["name1", "name2"]]
+df.loc["2014-08-25":"2016-09-16"]  # Slice date range
+df.loc["2014":"2016"]  # Slice by partial date range
+df.loc[[("name1", "Group1"), ("name2", "Group2") ]]  # Subset based on intersection of two vars
+
+# Slice DF based on range of index values
+df.loc[("Labrador", "Brown"):("Schnauzer", "Grey")]
+
+# Slice columns (keep all rows)
+df.loc[:, "name":"height"]
+
+# Slide DF using integers
+df.iloc[1:3, 3:6]
 
 # Slice DF based on logical conditions - AND logic
 df[ (df["col_name"] == "value1") & (df["col_name2"] == "value2") ]
@@ -302,6 +343,14 @@ df["breed"].value_counts(sort=True)
 # Check proportion table, placing largest groups at top
 df["breed"].value_counts(normalize=True)
 
+# Make a pivot table of var with rows and cols passed as list
+pt = df.pivot_table("var", index=["country", "city"], columns="year")
+
+# Dates
+dataframe["date"].dt.year
+dataframe["date"].dt.month
+dataframe["date"].dt.day
+
 # Grouped summaries
 df.groupby("grouping_var")["var"].mean()
 df.groupby("grouping_var")["var"].agg([min, np.mean, max, sum])
@@ -315,7 +364,63 @@ df.pivot_table(values="var", index="groupping_var1", columns="groupping_var2")
 df.pivot_table(values="var", index="groupping_var1", columns="groupping_var2", fill_value=0)
 df.pivot_table(values="var", index="groupping_var1", columns="groupping_var2", fill_value=0, margins=True)
 
+# Check for missing data
+df.isna()
+df.isna().any()
+df.isna().sum()
+df.isna().sum().plot(kind="bar")
 
+# Listwise deletion for missing values
+df.dropna()
+
+# Replace missing values with all zeros
+df.fillna(0)
+
+
+""" matplotlib objects/methods/functions and attributes  """ # =============================================================================
+
+# Load library
+import matplotlib.pyplot as plt
+
+# Make histogram
+df["col"].hist()
+df["col"].hist(bins=20)
+
+# Stack two histograms as two diff colors with transparency and add legend
+dog_pack[dog_pack["sex"]=="F"]["height_cm"].hist(alpha=0.7)
+dog_pack[dog_pack["sex"]=="M"]["height_cm"].hist(alpha=0.7)
+plt.legend(["F","M"])
+plt.show()
+
+# Bar plot for comparing numeric and categorical variable
+df.groupby("var")["col"].mean().plot(kind="bar")
+plt.show()
+
+# Line chart showing change over time 
+df.plot(x="date", y="score", kind="line")
+plt.show()
+
+# Rotate x-axis to fit text
+df.plot(x="date", y="score", kind="line", rot=45)
+plt.show()
+
+# Scatter plot
+df.plot(x="height", y="weight", kind="scatter")
+plt.show()
+
+# Scatter plot
+df.plot(x="height", y="weight", kind="scatter", title = "Title")
+plt.show()
+
+# Scatter plot
+df.plot(x="height", y="weight", kind="scatter")
+plt.show()
+
+# Scatter plot
+df.plot(x="height", y="weight", kind="scatter")
+plt.show()
+
+ 
 """ Interacting with other Python libraries """ # =============================================================================
 
 # Install package - using pip (you might have to first install pip yo install other libraries)
