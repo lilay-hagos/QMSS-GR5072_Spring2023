@@ -64,6 +64,12 @@ x.reverse()
 
 ###### Methods / Functions ###### =========================
 
+# Concatenate strings
+print("Hi " + "name")
+
+# Repeat string 5x times
+print("hi " * 5)
+
 # Capitalize first word only
 x.capitalize()
 
@@ -85,6 +91,74 @@ print("Average: " + str(avg))
 
 
 
+"""  dictionay object methods/functions and attributes """ # =============================================================================
+
+# Initialize an empty dictionary
+dict1 = {}
+
+# Append new Key-Value pair to dictionary
+dict1["New Key"] = value
+
+
+
+""" Control statements and Functions """ # =============================================================================
+
+# Usually, statements in a Python program execute in the order they're written, which we call
+# sequential execution. But various Python functions allow you to write code which alters the 
+# order in which statements will execute. This called transfer of code, and is achieved by 
+# Python control statements. For example, an if-else statement allows you to only exectute
+# a chunk of code if certain conditions are satisfied
+
+# If statement
+if condition:
+    print(x)
+    
+# If else if statements
+if condition1:
+    print(x)
+elif condition2:
+    print(z)
+else:
+    print(x)
+    
+# While loops: These run indefinetly until a certain condition is false
+iterator = 1
+while interator < 10:
+    print(x)
+    iterator += 1
+
+# for loops - iterate over a loop
+for i in list:
+    print(i)
+    
+# for loops - iterate over a loop, and use the enumerate function to return the index in addition to the value
+for index, item in enumerate(list):
+    print(i)    
+
+# for loops - iterate over a dictionary
+for key, val in my_dict.items():
+    print(val)
+    
+# for loops - iterate over a 1D np.array
+for val in array:
+    print(val)
+
+# for loops - iterate over a 2D np.array
+for val in np.diter(array):
+    print(val)
+
+# for loops - iterate over pd.DataFrame
+for lab, row in df.iterrows():
+    print(lab)
+
+# Define a function with a single parameter
+def square(x):
+    ''' Docstrings '''
+    print(x ** 2)
+    
+# Write a lambda function
+fun = lambda x, y: x ** y
+
 
 
 """ numpy objects/methods/functions and attributes  """ # =============================================================================
@@ -99,6 +173,7 @@ print("Average: " + str(avg))
 # np.float64
 # np.float32
 # np.bool_
+# np.string_
 # np.datetime64
 
 
@@ -130,21 +205,11 @@ with open("file.npy", "rb") as f: # rb stands for "read binary"
     array = np.load(f)
 
 
-
-###### Attributes ###### =========================
-
 # See data type
 array.dtype
 
 # See dimensions of np.array
 np_array.shape
-
-
-
-###### Methods / Functions ###### =========================
-
-# See data type
-array.dtype
 
 # Type conversion (Hierarchy: string > float > integer > boolean)
 array.astype(np.int32)
@@ -168,7 +233,7 @@ np.unique(array)
 np.transpose(array)
 
 # Bind columns together
-np.columnstack((col1, col2))
+np.column_stack((col1, col2))
 
 # Create 3X2 array of all zeros
 np.zeros((3,2), dtype = np.int8) # Use smaller bit size for an array of zeros
